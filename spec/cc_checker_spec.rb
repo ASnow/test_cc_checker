@@ -6,11 +6,17 @@ describe CcChecker do
   end
 
   describe '.run' do
-    it 'get credit card number as argument' do
-      expect(CcChecker.run()).not_to be nil
+    it 'expects argument' do
+      expect{ CcChecker.run }.to raise_error
     end
-    it 'return boolean' do
-      expect(CcChecker.run()).not_to be nil
+
+    it 'get credit card number as argument' do
+      expect(CcChecker.run(:arg)).not_to be nil
+    end
+
+    it 'return validator value' do
+      expect_any_instance_of(CcChecker::Validator).to receive(:valid?).and_return(:return_value)
+      expect(CcChecker.run(:arg)).to be :return_value
     end
   end
 end
