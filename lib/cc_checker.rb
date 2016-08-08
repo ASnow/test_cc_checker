@@ -1,5 +1,8 @@
 require "cc_checker/version"
 
 module CcChecker
-  # Your code goes here...
+  def self.run card_number
+    puts card_number
+    true
+  end
 end
