@@ -1,11 +1,11 @@
 module CcChecker
   class Validator
-    DEFULT_CARD_TYPE = CcChecker::CardType.new(:Unknown, /.?/, CcChecker::Validator::Luhn)
+    DEFULT_CARD_TYPE = CcChecker::CardType::UNKNOWN
     CARD_TYPES = [
-      CcChecker::CardType.new(:AMEX, /\A3(4|7)\d{13}\z/, CcChecker::Validator::Luhn),
-      CcChecker::CardType.new(:Discover, /\A6011\d{12}\z/, CcChecker::Validator::Luhn),
-      CcChecker::CardType.new(:MasterCard, /\A5[1-5]\d{14}\z/, CcChecker::Validator::Luhn),
-      CcChecker::CardType.new(:Visa, /\A4\d{12,15}\z/, CcChecker::Validator::Luhn)
+      CcChecker::CardType::AMEX,
+      CcChecker::CardType::DISCOVER,
+      CcChecker::CardType::MASTER_CARD,
+      CcChecker::CardType::VISA,
     ]
     attr_accessor :card_number
 

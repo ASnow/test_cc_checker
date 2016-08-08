@@ -5,4 +5,4 @@ require "cc_checker"
 
 result = CcChecker.run ARGV[0]
 puts result.card_type.name
-puts result.valid?
+puts result.valid? ? 'Valid' : 'Invalid'
