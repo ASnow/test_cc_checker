@@ -5,16 +5,16 @@ module CcChecker
       CcChecker::CardType::AMEX,
       CcChecker::CardType::DISCOVER,
       CcChecker::CardType::MASTER_CARD,
-      CcChecker::CardType::VISA,
-    ]
+      CcChecker::CardType::VISA
+    ].freeze
     attr_accessor :card_number
 
-    def initialize card_number
+    def initialize(card_number)
       @errors = []
       @card_number = card_number
     end
 
-    def add error
+    def add(error)
       @errors << error
     end
 

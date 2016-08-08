@@ -4,11 +4,10 @@ describe CcChecker::Validator do
   let(:item) { described_class.new(card_number) }
 
   describe '#valid?' do
-
-    subject{ item.valid? }
+    subject { item.valid? }
 
     context 'not string' do
-      shared_examples "wrong" do |parameter|
+      shared_examples 'wrong' do |parameter|
         let(:card_number) { parameter }
         it "return false for #{parameter.inspect}" do
           expect(subject).to eq(false)
@@ -20,21 +19,21 @@ describe CcChecker::Validator do
       end
 
       [nil, 1, [], {}, false, true, :symbol].each do |arg|
-        it_behaves_like "wrong", arg
+        it_behaves_like 'wrong', arg
       end
     end
 
     context 'string' do
-      let(:card_number){ '' }
+      let(:card_number) { '' }
 
       context 'return card type check as result' do
-        it "false" do
-          expect(item).to receive(:card_type).and_return(double(:result, :valid? => false))
+        it 'false' do
+          expect(item).to receive(:card_type).and_return(double(:result, valid?: false))
           expect(subject).to eq(false)
         end
 
-        it "true" do
-          expect(item).to receive(:card_type).and_return(double(:result, :valid? => true))
+        it 'true' do
+          expect(item).to receive(:card_type).and_return(double(:result, valid?: true))
           expect(subject).to eq(true)
         end
       end
@@ -48,10 +47,10 @@ describe CcChecker::Validator do
     end
 
     let(:card_number) { :any }
-    let(:card_type){ double(:card_type, :=== => false) } 
-    let(:other_card_type){ double(:other_card_type, :=== => false) } 
+    let(:card_type) { double(:card_type, :=== => false) }
+    let(:other_card_type) { double(:other_card_type, :=== => false) }
 
-    subject{ item.send :card_type }
+    subject { item.send :card_type }
 
     context 'for wrong card number' do
       it 'return default' do
@@ -59,7 +58,6 @@ describe CcChecker::Validator do
         expect(subject).to eq(:default)
       end
     end
-
 
     context 'for right card number' do
       it 'return card type' do

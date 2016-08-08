@@ -1,7 +1,6 @@
 #!/usr/bin/env ruby
 
-require "cc_checker"
-
+require 'cc_checker'
 
 result = CcChecker.run ARGV[0]
 puts result.card_type.name

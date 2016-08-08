@@ -6,7 +6,7 @@ module CcChecker
           sum + digits[0].to_i + digits[1].to_i * 2
         end
 
-        check_number % 10 == 0
+        (check_number % 10).zero?
       end
     end
   end

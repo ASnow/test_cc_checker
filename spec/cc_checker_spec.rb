@@ -7,7 +7,7 @@ describe CcChecker do
 
   describe '.run' do
     it 'expects argument' do
-      expect{ CcChecker.run }.to raise_error
+      expect { CcChecker.run }.to raise_error
     end
 
     it 'get credit card number as argument' do
