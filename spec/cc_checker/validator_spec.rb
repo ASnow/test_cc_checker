@@ -1,15 +1,11 @@
 require 'spec_helper'
 
 describe CcChecker::Validator do
+  let(:item) { described_class.new(card_number) }
+
   describe '#valid?' do
-    before :each do
-      stub_const('CcChecker::Validator::CARD_TYPES', [card_type_validator_factory])
-    end
 
-    let(:card_type_validator){ double(:card_type_validator, valid?: false) } 
-    let(:card_type_validator_factory){ double(:card_type_validator_factory, new: card_type_validator) } 
-
-    subject{ described_class.new(card_number).valid? }
+    subject{ item.valid? }
 
     context 'not string' do
       shared_examples "wrong" do |parameter|
@@ -17,8 +13,8 @@ describe CcChecker::Validator do
         it "return false for #{parameter.inspect}" do
           expect(subject).to eq(false)
         end
-        it "don't run validators factory for #{parameter.inspect}" do
-          expect(card_type_validator_factory).not_to receive(:new)
+        it "don't run type search for #{parameter.inspect}" do
+          expect(item).not_to receive(:card_type)
           subject
         end
       end
@@ -30,26 +26,45 @@ describe CcChecker::Validator do
 
     context 'string' do
       let(:card_number){ '' }
-      it "run validators factory" do
-        expect(card_type_validator_factory).to receive(:new)
-        subject
-      end
 
-      it "run validators check" do
-        expect(card_type_validator).to receive(:valid?)
-        subject
-      end
-
-      context 'return validators check as result' do
+      context 'return card type check as result' do
         it "false" do
-          expect(card_type_validator).to receive(:valid?).and_return(false)
+          expect(item).to receive(:card_type).and_return(double(:result, :valid? => false))
           expect(subject).to eq(false)
         end
 
         it "true" do
-          expect(card_type_validator).to receive(:valid?).and_return(true)
+          expect(item).to receive(:card_type).and_return(double(:result, :valid? => true))
           expect(subject).to eq(true)
         end
+      end
+    end
+  end
+
+  describe '#card_type' do
+    before :each do
+      stub_const('CcChecker::Validator::CARD_TYPES', [other_card_type, card_type])
+      stub_const('CcChecker::Validator::DEFULT_CARD_TYPE', :default)
+    end
+
+    let(:card_number) { :any }
+    let(:card_type){ double(:card_type, :=== => false) } 
+    let(:other_card_type){ double(:other_card_type, :=== => false) } 
+
+    subject{ item.send :card_type }
+
+    context 'for wrong card number' do
+      it 'return default' do
+        expect(card_type).to receive(:===).and_return(false)
+        expect(subject).to eq(:default)
+      end
+    end
+
+
+    context 'for right card number' do
+      it 'return card type' do
+        expect(card_type).to receive(:===).and_return(true)
+        expect(subject).to eq(card_type)
       end
     end
   end

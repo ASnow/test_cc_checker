@@ -6,7 +6,7 @@ describe CcChecker::Validator::Luhn do
     subject{ described_class.new(context).valid? }
 
     shared_examples "luhn algo" do |card_number, result|
-      let(:context) { double(card_number: card_number) }
+      let(:context) { double(card_number: card_number, add: '') }
 
       it "return #{result.inspect} for #{card_number.inspect}" do
         expect(subject).to eq(result)

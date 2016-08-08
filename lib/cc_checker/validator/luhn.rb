@@ -6,6 +6,8 @@ module CcChecker
           sum + digits[0].to_i + digits[1].to_i * 2
         end
 
+
+        @context.add 'Valid' 'Invalid'
         check_number % 10 == 0
       end
     end

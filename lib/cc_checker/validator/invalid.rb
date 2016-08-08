@@ -1,9 +1,8 @@
 module CcChecker
   class Validator
-    class Amex < Luhn
+    class Invalid < Base
       def valid?
-        
-        super
+        false
       end
     end
   end

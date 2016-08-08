@@ -1,12 +1,11 @@
 module CcChecker
   class Validator
     class Base
+      extend Forwardable
+      def_delegators :@context, :card_number, :add
+
       def initialize context
         @context = context
-      end
-
-      def card_number
-        @context.card_number
       end
 
       def valid?

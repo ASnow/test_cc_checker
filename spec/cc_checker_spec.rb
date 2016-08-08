@@ -14,9 +14,8 @@ describe CcChecker do
       expect(CcChecker.run(:arg)).not_to be nil
     end
 
-    it 'return validator value' do
-      expect_any_instance_of(CcChecker::Validator).to receive(:valid?).and_return(:return_value)
-      expect(CcChecker.run(:arg)).to be :return_value
+    it 'return validator' do
+      expect(CcChecker.run(:arg)).to be_a CcChecker::Validator
     end
   end
 end
